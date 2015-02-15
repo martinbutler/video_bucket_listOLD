@@ -5,6 +5,10 @@ angular.module('vimeoMartinApp')
     $scope.awesomeThings = [];
     $scope.searchResults = [];
     var currentUser = Auth.getCurrentUser();
+    $scope.addToBucket = false;
+    $scope.singleword = /^\s*\w*\s*$/;
+    $scope.tag = "skydiving";
+    $scope.bucketTitle = "Go Skydiving";
 
     $http.get('/api/things').success(function(awesomeThings) {
       $scope.awesomeThings = awesomeThings;
@@ -27,11 +31,23 @@ angular.module('vimeoMartinApp')
       socket.unsyncUpdates('thing');
     });
 
-    $scope.search = function() {
-      $http.get('/api/vimeo/'+ currentUser.accessToken).success(function(response) {
+    $scope.search = function(tag) {
+      $scope.addToBucket = true;
+      $scope.searchResults = [];
+      $http.get('/api/vimeo/'+ currentUser.accessToken + '/' + tag).success(function(response) {
         var data = JSON.parse(response);
 
-        $scope.searchResults = data.data;
+        data.data.forEach(function (result) {
+          console.log(result.pictures.sizes[3].link);
+          $scope.searchResults.push({uri: result.uri,
+              videoNum: parseInt(result.uri.split("").reverse().join("")).toString().split("").reverse().join(""),
+              description: result.desription,
+              link: result.link,
+              name: result.name,
+              src: "http://player.vimeo.com/video/" + parseInt(result.uri.split("").reverse().join("")).toString().split("").reverse().join("") + "?api=1&player_id=player1",
+              image: result.pictures.sizes[3].link || "temp"
+          });
+        });
 
       });
     };
