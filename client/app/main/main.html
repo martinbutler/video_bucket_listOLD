@@ -4,8 +4,8 @@
   <div class="container">
     <h1>Video Bucket List</h1>
     <p class="lead">Don't just listed it, document it!</p>
-    <i class="fa fa-bitbucket fa-5x"></i>
     <i class="fa fa-vimeo-square fa-5x"></i>
+    <i class="fa fa-bitbucket fa-5x"></i>
     <i class="fa fa-list fa-5x"></i>
   </div>
 </header>
@@ -13,10 +13,32 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-12">
-    <button type="submit" class="btn btn-primary" ng-click="search()">Create Goal</button>
+    <button type="submit" class="btn btn-primary" ng-hide="addToBucket" ng-click="search()">Add To Bucket</button>
+    <div ng-show="addToBucket || true">
+      <form name="searchForm">
+        <strong>Bucket List Title: </strong><input type="text" name="bucketTitle" ng-model="bucketTitle" required ng-trim="required">
+        <span class="error" ng-show="searchForm.bucketTitle.$error.required">
+          Required!</span>
+        <strong>Search Vimeo by Tag: </strong><input type="text" name="input" ng-model="tag" ng-pattern="singleword" required ng-trim="false">
+        <span class="error" ng-show="searchForm.input.$error.required">
+          Required!</span>
+        <span class="error" ng-show="searchForm.input.$error.pattern">
+          Single tag only!</span>
+        <button type="submit" class="btn btn-primary" ng-hide='!tag || !bucketTitle' ng-disabled="!tag || !bucketTitle" ng-click="search(tag)">Search Vimeo</button>
+       </form>
+       <div >
+       <h1 class="page-header">Select Inspiration Video:</h1>
+         <ul ng-repeat="data in searchResults">
+         <li>
+              <img ng-src="{{data.image}}">
+         </li>
+       </div>
+    </div>
+
+
+
     <!-- <iframe id="player1" src="http://player.vimeo.com/video/27855315?api=1&player_id=player1" width="400" height="225" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe> -->
-    <button type="submit" class="btn btn-primary" ng-click="search()">Test Get</button>
-      <h1 class="page-header">Search Results:</h1>
+      <h1 class="page-header">My Video Bucket List:</h1>
       <ul ng-repeat="data in searchResults">
         <li><a href="#" tooltip="{{data.name}}">{{data.name}}<button type="button" class="close" ng-click="deleteThing(thing)">&times;</button></a></li>
       </ul>
@@ -38,6 +60,5 @@
   <div class="container">
       <p>Video Bucket List v0.0.01 |
         <a href="https://www.martinbutler.com">Martin Butler</a> |
-         <!-- <a href="https://github.com/DaftMonk/generator-angular-fullstack/issues?state=open">Issues</a></p> -->
   </div>
 </footer>

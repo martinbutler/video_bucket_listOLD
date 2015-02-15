@@ -14,8 +14,10 @@ exports.index = function(req, res) {
 };
 
 // Get a single vimeo
-exports.show = function(req, res) {
-  var url = "https://api.vimeo.com/tags/skydiving/videos";
+exports.getVidoes = function(req, res) {
+  console.log('ding', req.params.tag);
+  var url = "https://api.vimeo.com/tags/" + req.params.tag + "/videos";
+  console.log(url);
   request.get(url, function(err, response, body) {
     return res.json(body);
   }).auth(null, null, true, req.params.id)
