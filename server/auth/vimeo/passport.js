@@ -16,7 +16,6 @@ exports.setup = function (User, config) {
       if (err) {
         return done(err);
       }
-      console.log('111111')
       if (!user) {
         user = new User({
           name: profile.displayName,
@@ -31,14 +30,11 @@ exports.setup = function (User, config) {
           return done(err, user);
         });
       } else {
-        console.log('user', user)
-        console.log('acc', accessToken)
         user.accessToken = accessToken;
         user.save(function(err) {
           if (err) return done(err);
           return done(err, user);
         });
-        console.log(user)
         return done(err, user);
       }
     });
