@@ -25,6 +25,13 @@ angular.module('vimeoMartinApp')
       });
     };
 
+    $scope.completed = function(index) {
+      console.log('item', item);
+      $http.put('/api/users/' + currentUser._id + '/complete', { index: index}).success(function(response) {
+        $scope.bucketList[index].completed = true;
+      });
+    };
+
     $scope.search = function(tag) {
       $scope.addToBucket = true;
       $scope.searchResults = [];
@@ -41,8 +48,9 @@ angular.module('vimeoMartinApp')
               src: parseInt(result.uri.split("").reverse().join("")).toString().split("").reverse().join(""),
               image: result.pictures.sizes[3].link
           });
-          $scope.selectVideo = true;
+          // $scope.selectVideo = true;
         });
       });
+      $scope.selectVideo = true;
     };
   });
