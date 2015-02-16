@@ -31,9 +31,8 @@
           <h1 class="page-header">Select Inspirational Video:</h1>
           <ul ng-repeat="data in searchResults">
             <ul>
-              <!-- <img ng-src="{{data.image}}"> -->
               <iframe id="player1" ng-src="{{getIframeSrc(data.src)}}" width="400" height="225" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
-              <a <i class="fa fa-thumbs-o-up fa-5x" ng-click="addItem(data)"></i></a>
+              <!-- <a <i class="fa fa-thumbs-o-up fa-5x" ng-click="addItem(data)"></i></a> -->
              </ul>
            </ul>
        </div>
@@ -45,9 +44,8 @@
         <ul ng-repeat="data in bucketList">
           <ul>
             <h3>{{data.bucketTitle}}</h3>
-            <!-- <img ng-src="{{data.image}}"> -->
             <iframe id="player1" ng-src="{{getIframeSrc(data.src)}}" width="400" height="225" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
-            <a <i ng-hide="data.completed" class="fa fa-square-o fa-5x" ng-click="addItem(data)"></i></a>
+            <!-- <a <i ng-hide="data.completed" class="fa fa-square-o fa-5x" ng-click="addItem(data)"></i></a> -->
             <i ng-show="data.completed" class="fa fa-check-square-o fa-5x"></i>
           </ul>
         </ul>
