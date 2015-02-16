@@ -10,7 +10,8 @@ exports.setup = function (User, config) {
   function(token, tokenSecret, profile, done) {
     var accessToken = token;
     User.findOne({
-      'vimeo.id': profile.id
+      // 'vimeo.id': profile.id
+      'name': profile.username
     }, function(err, user) {
       if (err) {
         return done(err);
@@ -29,6 +30,11 @@ exports.setup = function (User, config) {
           return done(err, user);
         });
       } else {
+        user.accessToken = accessToken;
+        user.save(function(err) {
+          if (err) return done(err);
+          return done(err, user);
+        });
         return done(err, user);
       }
     });

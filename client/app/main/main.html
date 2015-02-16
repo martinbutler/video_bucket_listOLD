@@ -31,10 +31,8 @@
           <h1 class="page-header">Select Inspirational Video:</h1>
           <i ng-hide="searchResults[0]" class="fa fa-spinner fa-spin fa-5x"></i>
           <ul ng-repeat="data in searchResults">
-            <ul>
               <iframe id="player1" ng-src="{{getIframeSrc(data.src)}}" width="400" height="225" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
               <button><i class="fa fa-thumbs-o-up fa-5x" ng-click="addItem(data)"></i></button>
-            </ul>
           </ul>
        </div>
     </div>
