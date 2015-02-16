@@ -38,9 +38,6 @@ angular.module('vimeoMartinApp')
               description: result.desription,
               link: result.link,
               name: result.name,
-              // $sce.getTrustedResourceUrl('http://player.vimeo.com/video/xxxxx')
-              // src: $sce.getTrustedResourceUrl("http://player.vimeo.com/video/" + parseInt(result.uri.split("").reverse().join("")).toString().split("").reverse().join("") + "?api=1&player_id=player1"),
-              // src: $sce.getTrustedResourceUrl("http://player.vimeo.com/video/" + vidNum),
               src: parseInt(result.uri.split("").reverse().join("")).toString().split("").reverse().join(""),
               image: result.pictures.sizes[3].link
           });
