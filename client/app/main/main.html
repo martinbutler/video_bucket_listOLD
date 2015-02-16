@@ -46,7 +46,7 @@
           <ul>
             <h3>{{data.bucketTitle}}</h3>
             <iframe id="player1" ng-src="{{getIframeSrc(data.src)}}" width="400" height="225" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
-            <button title="Click To Complete" class="btn-default"ng-hide="data.completed"><i  class="fa fa-square-o fa-5x" ng-click="completed($index)"></i></button>
+            <button title="Click To Complete" class="btn-default"ng-hide="data.completed"><i  class="fa fa-square-o fa-5x" ng-click="complete($index)"></i></button>
             <button ng-show="data.completed"><i class="fa fa-check-square-o fa-5x"></i></button>
           </ul>
         </ul>

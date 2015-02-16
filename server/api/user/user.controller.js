@@ -37,6 +37,23 @@ exports.setItem = function(req, res, next) {
   });
 };
 
+exports.completeItem = function(req, res, next) {
+  var userId = req.user._id;
+  var completeItemIndex = req.body.index
+
+  User.findById(userId, function (err, user) {
+    if(user) {
+      user.bucketList[completeItemIndex].completed = true;
+      user.save(function(err) {
+        if (err) return validationError(res, err);
+        res.send(200, user.bucketList);
+      });
+    } else {
+      res.send(403);
+    }
+  });
+};
+
 
 
 /**

@@ -4,12 +4,16 @@ angular.module('vimeoMartinApp')
   .controller('MainCtrl', function ($scope, $http, socket, Auth, $sce) {
     $scope.searchResults = [];
     var currentUser = Auth.getCurrentUser();
-    $scope.bucketList = currentUser.bucketList;
+    
     $scope.addToBucket = false;
     $scope.selectVideo = false;
     $scope.singleword = /^\s*\w*\s*$/;
     $scope.tag = "skydiving";
     $scope.bucketTitle = "Go Skydiving";
+
+    currentUser.$promise.then(function(user) {
+      $scope.bucketList = currentUser.bucketList;
+    })
 
     $scope.getIframeSrc = function(src) {
       return $sce.trustAsResourceUrl('http://player.vimeo.com/video/' + src + "?api=1&player_id=player1");
@@ -25,8 +29,7 @@ angular.module('vimeoMartinApp')
       });
     };
 
-    $scope.completed = function(index) {
-      console.log('item', item);
+    $scope.complete = function(index) {
       $http.put('/api/users/' + currentUser._id + '/complete', { index: index}).success(function(response) {
         $scope.bucketList[index].completed = true;
       });
