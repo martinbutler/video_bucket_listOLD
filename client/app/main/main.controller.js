@@ -4,12 +4,16 @@ angular.module('vimeoMartinApp')
   .controller('MainCtrl', function ($scope, $http, socket, Auth, $sce) {
     $scope.searchResults = [];
     var currentUser = Auth.getCurrentUser();
-    $scope.bucketList = currentUser.bucketList;
+    
     $scope.addToBucket = false;
     $scope.selectVideo = false;
     $scope.singleword = /^\s*\w*\s*$/;
     $scope.tag = "skydiving";
     $scope.bucketTitle = "Go Skydiving";
+
+    currentUser.$promise.then(function(user) {
+      $scope.bucketList = currentUser.bucketList;
+    })
 
     $scope.getIframeSrc = function(src) {
       return $sce.trustAsResourceUrl('http://player.vimeo.com/video/' + src + "?api=1&player_id=player1");
@@ -22,6 +26,12 @@ angular.module('vimeoMartinApp')
         $scope.addToBucket = false;
         $scope.selectVideo = false;
         $scope.bucketList.push(item);
+      });
+    };
+
+    $scope.complete = function(index) {
+      $http.put('/api/users/' + currentUser._id + '/complete', { index: index}).success(function(response) {
+        $scope.bucketList[index].completed = true;
       });
     };
 
@@ -38,14 +48,12 @@ angular.module('vimeoMartinApp')
               description: result.desription,
               link: result.link,
               name: result.name,
-              // $sce.getTrustedResourceUrl('http://player.vimeo.com/video/xxxxx')
-              // src: $sce.getTrustedResourceUrl("http://player.vimeo.com/video/" + parseInt(result.uri.split("").reverse().join("")).toString().split("").reverse().join("") + "?api=1&player_id=player1"),
-              // src: $sce.getTrustedResourceUrl("http://player.vimeo.com/video/" + vidNum),
               src: parseInt(result.uri.split("").reverse().join("")).toString().split("").reverse().join(""),
               image: result.pictures.sizes[3].link
           });
-          $scope.selectVideo = true;
+          // $scope.selectVideo = true;
         });
       });
+      $scope.selectVideo = true;
     };
   });

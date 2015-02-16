@@ -29,13 +29,13 @@
        </form>
        <div ng-show="selectVideo">
           <h1 class="page-header">Select Inspirational Video:</h1>
+          <i ng-hide="searchResults[0]" class="fa fa-spinner fa-spin fa-5x"></i>
           <ul ng-repeat="data in searchResults">
             <ul>
-              <!-- <img ng-src="{{data.image}}"> -->
               <iframe id="player1" ng-src="{{getIframeSrc(data.src)}}" width="400" height="225" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
-              <a <i class="fa fa-thumbs-o-up fa-5x" ng-click="addItem(data)"></i></a>
-             </ul>
-           </ul>
+              <button><i class="fa fa-thumbs-o-up fa-5x" ng-click="addItem(data)"></i></button>
+            </ul>
+          </ul>
        </div>
     </div>
     </div>
@@ -45,10 +45,9 @@
         <ul ng-repeat="data in bucketList">
           <ul>
             <h3>{{data.bucketTitle}}</h3>
-            <!-- <img ng-src="{{data.image}}"> -->
             <iframe id="player1" ng-src="{{getIframeSrc(data.src)}}" width="400" height="225" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
-            <a <i ng-hide="data.completed" class="fa fa-square-o fa-5x" ng-click="addItem(data)"></i></a>
-            <i ng-show="data.completed" class="fa fa-check-square-o fa-5x"></i>
+            <button title="Click To Complete" class="btn-default"ng-hide="data.completed"><i  class="fa fa-square-o fa-5x" ng-click="complete($index)"></i></button>
+            <button ng-show="data.completed"><i class="fa fa-check-square-o fa-5x"></i></button>
           </ul>
         </ul>
       </div>
