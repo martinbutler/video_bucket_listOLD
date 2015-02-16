@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vimeoMartinApp')
-  .controller('MainCtrl', function ($scope, $http, socket, Auth) {
+  .controller('MainCtrl', function ($scope, $http, socket, Auth, $sce) {
     $scope.searchResults = [];
     var currentUser = Auth.getCurrentUser();
     $scope.bucketList = currentUser.bucketList;
@@ -10,6 +10,10 @@ angular.module('vimeoMartinApp')
     $scope.singleword = /^\s*\w*\s*$/;
     $scope.tag = "skydiving";
     $scope.bucketTitle = "Go Skydiving";
+
+    $scope.getIframeSrc = function(src) {
+      return $sce.trustAsResourceUrl('http://player.vimeo.com/video/' + src + "?api=1&player_id=player1");
+    };
 
 
     $scope.addItem = function(item) {
@@ -28,12 +32,16 @@ angular.module('vimeoMartinApp')
         var data = JSON.parse(response);
 
         data.data.forEach(function (result) {
+          var vidNum = parseInt(result.uri.split("").reverse().join("")).toString().split("").reverse().join("");
           $scope.searchResults.push({uri: result.uri,
               videoNum: parseInt(result.uri.split("").reverse().join("")).toString().split("").reverse().join(""),
               description: result.desription,
               link: result.link,
               name: result.name,
-              src: "http://player.vimeo.com/video/" + parseInt(result.uri.split("").reverse().join("")).toString().split("").reverse().join("") + "?api=1&player_id=player1",
+              // $sce.getTrustedResourceUrl('http://player.vimeo.com/video/xxxxx')
+              // src: $sce.getTrustedResourceUrl("http://player.vimeo.com/video/" + parseInt(result.uri.split("").reverse().join("")).toString().split("").reverse().join("") + "?api=1&player_id=player1"),
+              // src: $sce.getTrustedResourceUrl("http://player.vimeo.com/video/" + vidNum),
+              src: parseInt(result.uri.split("").reverse().join("")).toString().split("").reverse().join(""),
               image: result.pictures.sizes[3].link
           });
           $scope.selectVideo = true;
