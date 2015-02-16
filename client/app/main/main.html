@@ -3,30 +3,32 @@
 <header class="hero-unit" id="banner">
   <div class="container">
     <h1>Video Bucket List</h1>
-    <p class="lead">Don't just listed it, document it!</p>
+    <p class="lead">Don't just listed it, get inspired!</p>
     <i class="fa fa-vimeo-square fa-5x"></i>
     <i class="fa fa-bitbucket fa-5x"></i>
     <i class="fa fa-list fa-5x"></i>
   </div>
 </header>
 
-<div class="container">
+<div class="container-fluid">
   <div class="row">
     <div class="col-lg-12">
-    <button type="submit" class="btn btn-primary" ng-hide="addToBucket" ng-click="addToBucket = true">Add To Bucket</button>
-    <div ng-show="addToBucket">
-      <h3>Establish A Bucket List Goal & Select A Video Inspirations</h3>
-      <form name="searchForm">
-        <strong>Bucket List Title: </strong><input type="text" name="bucketTitle" ng-model="bucketTitle" required ng-trim="required">
-        <span class="error" ng-show="searchForm.bucketTitle.$error.required">
+
+      <button type="submit" class="btn btn-primary" ng-hide="addToBucket" ng-click="addToBucket = true">Add To Bucket</button>
+
+      <div ng-show="addToBucket">
+        <h3>Establish A Bucket List Goal & Select A Video Inspirations</h3>
+        <form class="center-block" name="searchForm">
+          <strong>Bucket List Title: </strong><input type="text" name="bucketTitle" ng-model="bucketTitle" required ng-trim="required">
+          <span class="error" ng-show="searchForm.bucketTitle.$error.required">
           Required!</span>
-        <strong>Search Vimeo by Tag: </strong><input type="text" name="input" ng-model="tag" ng-pattern="singleword" required ng-trim="false">
-        <span class="error" ng-show="searchForm.input.$error.required">
+          <strong>Search Vimeo by Tag: </strong><input type="text" name="input" ng-model="tag" ng-pattern="singleword" required ng-trim="false">
+          <span class="error" ng-show="searchForm.input.$error.required">
           Required!</span>
-        <span class="error" ng-show="searchForm.input.$error.pattern">
-          Single tag only!</span>
-        <button type="submit" class="btn btn-primary" ng-hide='!tag || !bucketTitle' ng-disabled="!tag || !bucketTitle" ng-click="search(tag)">Search Vimeo</button>
-       </form>
+          <span class="error" ng-show="searchForm.input.$error.pattern">Single tag only!</span>
+          <button type="submit" class="btn btn-primary" ng-hide='!tag || !bucketTitle' ng-disabled="!tag || !bucketTitle" ng-click="search(tag)">Search Vimeo</button>
+        </form>
+
        <div ng-show="selectVideo">
           <h1 class="page-header">Select Inspirational Video:</h1>
           <i ng-hide="searchResults[0]" class="fa fa-spinner fa-spin fa-5x"></i>
@@ -34,24 +36,21 @@
               <iframe id="player1" ng-src="{{getIframeSrc(data.src)}}" width="400" height="225" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
               <button><i class="fa fa-thumbs-o-up fa-5x" ng-click="addItem(data)"></i></button>
           </ul>
-       </div>
-    </div>
-    </div>
+        </div>
+      </div>
 
-    <div ng-hide="addToBucket">
-      <h1 class="page-header">My Video Bucket List:</h1>
-        <ul ng-repeat="data in bucketList">
-          <ul>
+      <div ng-hide="addToBucket">
+        <h1 class="page-header ">My Video Bucket List:</h1>
+          <ul ng-repeat="data in bucketList">
             <h3>{{data.bucketTitle}}</h3>
             <iframe id="player1" ng-src="{{getIframeSrc(data.src)}}" width="400" height="225" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
             <button title="Click To Complete" class="btn-default"ng-hide="data.completed"><i  class="fa fa-square-o fa-5x" ng-click="complete($index)"></i></button>
             <button ng-show="data.completed"><i class="fa fa-check-square-o fa-5x"></i></button>
           </ul>
-        </ul>
       </div>
+
     </div>
   </div>
-
 </div>
 
 <footer class="footer">
