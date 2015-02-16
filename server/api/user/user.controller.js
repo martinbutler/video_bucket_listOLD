@@ -9,6 +9,36 @@ var validationError = function(res, err) {
   return res.json(422, err);
 };
 
+exports.thelist = function(req, res, next) {
+  var userId = req.user._id;
+  User.findOne({
+    _id: userId
+  }, '-salt -hashedPassword', function(err, user) { // don't ever give out the password or salt
+    if (err) return next(err);
+    if (!user) return res.json(401);
+    res.json(user);
+  });
+};
+
+exports.setItem = function(req, res, next) {
+  var userId = req.user._id;
+  var newItem = req.body.item
+
+  User.findById(userId, function (err, user) {
+    if(user) {
+      user.bucketList.push(newItem);
+      user.save(function(err) {
+        if (err) return validationError(res, err);
+        res.send(200, user.bucketList);
+      });
+    } else {
+      res.send(403);
+    }
+  });
+};
+
+
+
 /**
  * Get list of users
  * restriction: 'admin'
